@@ -27,8 +27,7 @@ void main()
             printf("Parent Process \n");
             printf("child created with pid %d \n", pid);
             break;
-        }
-        
+        }      
     }
 }
 
