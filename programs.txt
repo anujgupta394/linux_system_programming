@@ -1,0 +1,15 @@
+fork
+vfork
+exec
+fcntl
+open
+close
+read
+write
+lseek
+fcntl
+F_GETFL
+F_SETFL
+signals
+process and sharing files and getting same mode in other process
+inode
