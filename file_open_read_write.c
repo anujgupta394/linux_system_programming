@@ -1,6 +1,18 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+/*****************ATOMIC OPERATION*********************************
+Atomicity is a concept that we’ll encounter repeatedly when discussing the operation
+of system calls. All system calls are executed atomically. By this, we mean that
+the kernel guarantees that all of the steps in a system call are completed as a single
+operation, without being interrupted by another process or thread.
+Atomicity is essential to the successful completion of some operations. In particular,
+it allows us to avoid race conditions (sometimes known as race hazards). A
+race condition is a situation where the result produced by two processes (or
+threads) operating on shared resources depends in an unexpected way on the relative
+order in which the processes gain access to the CPU(s).
+*/
+
 /*The open() system call either opens an existing file or creates and opens a new file.*/
 
 /* **********************OPEN************************************
@@ -20,6 +32,8 @@ O_RDWR is not equivalent toO_RDONLY | O_WRONLY; the latter combination is a logi
 
 /*****************************************READ*********************************
 The read() system call reads data from the open file referred to by the descriptor fd.
+
+Creating a file exclusively
 O_EXCL
 This flag is used in conjunction with O_CREAT to indicate that if the file
 already exists, it should not be opened; instead, open() should fail, with
@@ -128,11 +142,11 @@ void main()
     // with set bit of O_ACCMODE others will be 0
     // flags 01011000 => this is for example only dont know which bits are for read/write/readwrite.
     //suppose 4th bit from right is for readwrite
-    // now ACCMODE will have 3 bits set 10001111
+    // now O_ACCMODE will have 3 bits set 10001100
     //01011000 in this either of the set bit from ACCMODE can be set means there will be only one access mode
-    //10001100
+    //10001100 - O_ACCMODE
     //& will be 00001000 which has set bit of read write
-    
+
     if (flags == -1)
     {
         printf("error fetching access Mode\n");
@@ -150,5 +164,15 @@ void main()
         printf("Sync Mode\n");
     }
 
+        /*
+        set the flags using F_SETFL
+        int flags;
+        flags = fcntl(fd, F_GETFL);
+        if (flags == -1)
+        errExit("fcntl");
+        flags |= O_APPEND;
+        if (fcntl(fd, F_SETFL, flags) == -1)
+        errExit("fcntl");
+        */
     close(fd);
 }
