@@ -121,6 +121,17 @@ void main()
     int flags = fcntl(fd, F_GETFL);       // third argiment is used to set flags might be using F_SETFL or others,
                                           // for reading flags no purpose, reads using fd file descriptor
     int accessMode = (flags & O_ACCMODE); // to check for read or write or readwrite
+    // there are three access mode out of many modes
+    // read only // write only // read_write
+    // in actual flag there can be only one bit set either for read/write/readwrite
+    //so O_ACCMODE will have these three bit set only and when we do & operation the set bit of flag will &
+    // with set bit of O_ACCMODE others will be 0
+    // flags 01011000 => this is for example only dont know which bits are for read/write/readwrite.
+    //suppose 4th bit from right is for readwrite
+    // now ACCMODE will have 3 bits set 10001111
+    //01011000 in this either of the set bit from ACCMODE can be set means there will be only one access mode
+    //10001100
+    //& will be 00001000 which has set bit of read write
     
     if (flags == -1)
     {
@@ -138,6 +149,6 @@ void main()
     {
         printf("Sync Mode\n");
     }
-    
+
     close(fd);
 }
