@@ -37,6 +37,7 @@ void main()
                 printf("error handler child");
             }
              sleep(5);
+             //get parent pid using getppid()
             int status = kill(getppid(), SIGUSR1); //SIGUSR1 and SIGUSR2 signals are reserved for user use
             sleep(1);
             break;
