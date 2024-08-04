@@ -22,7 +22,7 @@ std::string exec(const char* cmd) {
 }
 
 int main() {
-    std::string command = "ls -l"; // Replace with your command
+    std::string command = "ls -la"; // Replace with your command
     std::string output = exec(command.c_str());
     std::cout << "Command output:\n" << output << std::endl;
     return 0;
